@@ -1,6 +1,12 @@
-# clock_app
+# Flutter Clock App
+Minimal UI | Modern Theme | Full Functional
 
-A new Flutter project.
+<p align="center">
+  <img src="flutter_clock_app.png" alt="flutter alarm clock app" title="Screenshot">
+</p>
+
+If you like my work, support me to create more!<br>
+<a href="https://www.buymeacoffee.com/afzalali15" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 
 ## Getting Started
 
