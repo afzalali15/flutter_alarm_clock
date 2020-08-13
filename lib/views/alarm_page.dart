@@ -42,19 +42,21 @@ class _AlarmPageState extends State<AlarmPage> {
               children: alarms.map<Widget>((alarm) {
                 var alarmTime =
                     DateFormat('hh:mm aa').format(alarm.alarmDateTime);
+                var gradientColor = GradientTemplate
+                    .gradientTemplate[alarm.gradientColorIndex].colors;
                 return Container(
                   margin: const EdgeInsets.only(bottom: 32),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: alarm.gradientColors,
+                      colors: gradientColor,
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: alarm.gradientColors.last.withOpacity(0.4),
+                        color: gradientColor.last.withOpacity(0.4),
                         blurRadius: 8,
                         spreadRadius: 2,
                         offset: Offset(4, 4),
