@@ -13,6 +13,15 @@ class AlarmPage extends StatefulWidget {
 }
 
 class _AlarmPageState extends State<AlarmPage> {
+  DateTime _alarmTime;
+  String _alarmTimeString;
+
+  @override
+  void initState() {
+    _alarmTime = DateTime.now();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,7 +77,7 @@ class _AlarmPageState extends State<AlarmPage> {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                alarm.description,
+                                alarm.title,
                                 style: TextStyle(
                                     color: Colors.white, fontFamily: 'avenir'),
                               ),
@@ -125,7 +134,91 @@ class _AlarmPageState extends State<AlarmPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 32, vertical: 16),
                         onPressed: () {
-                          scheduleAlarm();
+                          _alarmTimeString =
+                              DateFormat('HH:mm').format(DateTime.now());
+                          showModalBottomSheet(
+                            useRootNavigator: true,
+                            context: context,
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(24),
+                              ),
+                            ),
+                            builder: (context) {
+                              return StatefulBuilder(
+                                builder: (context, setModalState) {
+                                  return Container(
+                                    padding: const EdgeInsets.all(32),
+                                    child: Column(
+                                      children: [
+                                        FlatButton(
+                                          onPressed: () async {
+                                            var selectedTime =
+                                                await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                            );
+                                            if (selectedTime != null) {
+                                              final now = DateTime.now();
+                                              var selectedDateTime = DateTime(
+                                                  now.year,
+                                                  now.month,
+                                                  now.day,
+                                                  selectedTime.hour,
+                                                  selectedTime.minute);
+                                              _alarmTime = selectedDateTime;
+                                              setModalState(() {
+                                                _alarmTimeString =
+                                                    selectedTime.toString();
+                                              });
+                                            }
+                                          },
+                                          child: Text(
+                                            _alarmTimeString,
+                                            style: TextStyle(fontSize: 32),
+                                          ),
+                                        ),
+                                        ListTile(
+                                          title: Text('Repeat'),
+                                          trailing:
+                                              Icon(Icons.arrow_forward_ios),
+                                        ),
+                                        ListTile(
+                                          title: Text('Sound'),
+                                          trailing:
+                                              Icon(Icons.arrow_forward_ios),
+                                        ),
+                                        ListTile(
+                                          title: Text('Title'),
+                                          trailing:
+                                              Icon(Icons.arrow_forward_ios),
+                                        ),
+                                        FloatingActionButton.extended(
+                                          onPressed: () async {
+                                            DateTime scheduleAlarmDateTime;
+                                            if (_alarmTime
+                                                .isAfter(DateTime.now()))
+                                              scheduleAlarmDateTime =
+                                                  _alarmTime;
+                                            else
+                                              scheduleAlarmDateTime = _alarmTime
+                                                  .add(Duration(days: 1));
+
+                                            scheduleAlarm(
+                                                scheduleAlarmDateTime);
+                                          },
+                                          icon: Icon(Icons.alarm),
+                                          label: Text('Save'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                          // scheduleAlarm();
                         },
                         child: Column(
                           children: <Widget>[
@@ -154,10 +247,7 @@ class _AlarmPageState extends State<AlarmPage> {
     );
   }
 
-  void scheduleAlarm() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 10));
-
+  void scheduleAlarm(DateTime scheduledNotificationDateTime) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',

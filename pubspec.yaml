@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  sqflite: ^1.3.0
   flutter_local_notifications: ^1.4.4+2
   dotted_border: ^1.0.5
   provider: ^4.1.3
