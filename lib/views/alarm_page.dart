@@ -17,6 +17,7 @@ class AlarmPage extends StatefulWidget {
 class _AlarmPageState extends State<AlarmPage> {
   DateTime _alarmTime;
   String _alarmTimeString;
+  bool _isRepeatSelected = false;
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>> _alarms;
   List<AlarmInfo> _currentAlarms;
@@ -212,8 +213,14 @@ class _AlarmPageState extends State<AlarmPage> {
                                               ),
                                               ListTile(
                                                 title: Text('Repeat'),
-                                                trailing: Icon(
-                                                    Icons.arrow_forward_ios),
+                                                trailing: Switch(
+                                                  onChanged: (value) {
+                                                    setModalState(() {
+                                                      _isRepeatSelected = value;
+                                                    });
+                                                  },
+                                                  value: _isRepeatSelected,
+                                                ),
                                               ),
                                               ListTile(
                                                 title: Text('Sound'),
@@ -226,7 +233,10 @@ class _AlarmPageState extends State<AlarmPage> {
                                                     Icons.arrow_forward_ios),
                                               ),
                                               FloatingActionButton.extended(
-                                                onPressed: onSaveAlarm,
+                                                onPressed: () {
+                                                  onSaveAlarm(
+                                                      _isRepeatSelected);
+                                                },
                                                 icon: Icon(Icons.alarm),
                                                 label: Text('Save'),
                                               ),
@@ -281,7 +291,8 @@ class _AlarmPageState extends State<AlarmPage> {
   }
 
   void scheduleAlarm(
-      DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo) async {
+      DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo,
+      {bool isRepeating}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
@@ -299,11 +310,26 @@ class _AlarmPageState extends State<AlarmPage> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.schedule(0, 'Office', alarmInfo.title,
-        scheduledNotificationDateTime, platformChannelSpecifics);
+    if (isRepeating)
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+          0,
+          'Office',
+          alarmInfo.title,
+          Time(
+              scheduledNotificationDateTime.hour,
+              scheduledNotificationDateTime.minute,
+              scheduledNotificationDateTime.second),
+          platformChannelSpecifics);
+    else
+      await flutterLocalNotificationsPlugin.schedule(
+          0,
+          'Office',
+          alarmInfo.title,
+          scheduledNotificationDateTime,
+          platformChannelSpecifics);
   }
 
-  void onSaveAlarm() {
+  void onSaveAlarm(bool _isRepeating) {
     DateTime scheduleAlarmDateTime;
     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
@@ -316,7 +342,7 @@ class _AlarmPageState extends State<AlarmPage> {
       title: 'alarm',
     );
     _alarmHelper.insertAlarm(alarmInfo);
-    scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
+    scheduleAlarm(scheduleAlarmDateTime, alarmInfo, isRepeating: _isRepeating);
     Navigator.pop(context);
     loadAlarms();
   }
