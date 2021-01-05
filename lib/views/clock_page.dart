@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:clock_app/constants/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +15,7 @@ class _ClockPageState extends State<ClockPage> {
   @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
-    var formattedTime = DateFormat('HH:mm').format(now);
+
     var formattedDate = DateFormat('EEE, d MMM').format(now);
     var timezoneString = now.timeZoneOffset.toString().split('.').first;
     var offsetSign = '';
@@ -41,13 +43,7 @@ class _ClockPageState extends State<ClockPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  formattedTime,
-                  style: TextStyle(
-                      fontFamily: 'avenir',
-                      color: CustomColors.primaryTextColor,
-                      fontSize: 64),
-                ),
+                DigitalClockWidget(),
                 Text(
                   formattedDate,
                   style: TextStyle(
@@ -105,6 +101,44 @@ class _ClockPageState extends State<ClockPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DigitalClockWidget extends StatefulWidget {
+  const DigitalClockWidget({
+    Key key,
+  }) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    return DigitalClockWidgetState();
+  }
+}
+
+class DigitalClockWidgetState extends State<DigitalClockWidget> {
+  var formattedTime = DateFormat('HH:mm').format(DateTime.now());
+  @override
+  void initState() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      var perviousMinute = DateTime.now().add(Duration(seconds: -1)).minute;
+      var currentMinute = DateTime.now().minute;
+      if (perviousMinute != currentMinute)
+        setState(() {
+          formattedTime = DateFormat('HH:mm').format(DateTime.now());
+        });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('=====>digital clock updated');
+    return Text(
+      formattedTime,
+      style: TextStyle(
+          fontFamily: 'avenir',
+          color: CustomColors.primaryTextColor,
+          fontSize: 64),
     );
   }
 }
