@@ -120,11 +120,10 @@ class DigitalClockWidgetState extends State<DigitalClockWidget> {
   @override
   void initState() {
     Timer.periodic(Duration(seconds: 1), (timer) {
-      var perviousMinute = DateTime.now().add(Duration(seconds: -1)).minute;
-      var currentMinute = DateTime.now().minute;
-      if (perviousMinute != currentMinute)
+      final currentTime = DateTime.now();
+      if (currentTime.second == 0)
         setState(() {
-          formattedTime = DateFormat('HH:mm').format(DateTime.now());
+          formattedTime = DateFormat('HH:mm').format(currentTime);
         });
     });
     super.initState();
