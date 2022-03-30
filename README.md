@@ -28,7 +28,7 @@ Flutter Clock App | Live Coding
 https://youtu.be/AqDxcfhgvwE
 
 If you like my work, support me to create more!<br>
-<a href="https://www.buymeacoffee.com/afzalali15" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="CodeX Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0BVKNS)
 
 ## Getting Started
 
