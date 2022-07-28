@@ -1,6 +1,34 @@
-# flutter_alarm_clock
+# Flutter Clock App
+Minimal UI | Modern Theme | Full Functional<br>
+[![Discord](https://img.shields.io/discord/731616556622282814?logo=discord&logoColor=white)](https://discord.com/invite/nWFnTqP)
 
-A new Flutter project.
+<p align="center">
+  <img src="flutter_clock_app.png" alt="flutter alarm clock app" title="Screenshot">
+</p>
+
+Flutter Custom Painter Tutorial || Clock App (Episode-1)
+https://youtu.be/HyAeZKWWuxA
+
+Flutter Design Tutorial || Clock App (Episode-2)
+https://youtu.be/MPc-K8oEbdE
+
+Flutter Navigation with Provider || Clock App (Episode-3)
+https://youtu.be/WMp5FnQ1X_g
+
+Flutter ListView Tutorial | Clock App (Episode-4)
+https://youtu.be/tKtYfuuVHlA
+
+Flutter Local Notification Tutorial | Clock App (Episode-5)
+https://youtu.be/iKxrt4ASR5Y
+
+SQLite Database in Flutter | Tutorial || Clock App (Episode-6)
+https://youtu.be/WqQhJmwp5L4
+
+Flutter Clock App | Live Coding
+https://youtu.be/AqDxcfhgvwE
+
+If you like my work, support me to create more!<br>
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0BVKNS)
 
 ## Getting Started
 
