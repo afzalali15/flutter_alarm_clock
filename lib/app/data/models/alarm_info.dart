@@ -1,9 +1,9 @@
 class AlarmInfo {
-  int id;
-  String title;
-  DateTime alarmDateTime;
-  bool isPending;
-  int gradientColorIndex;
+  int? id;
+  String? title;
+  DateTime? alarmDateTime;
+  bool? isPending;
+  int? gradientColorIndex;
 
   AlarmInfo(
       {this.id,
@@ -22,7 +22,7 @@ class AlarmInfo {
   Map<String, dynamic> toMap() => {
         "id": id,
         "title": title,
-        "alarmDateTime": alarmDateTime.toIso8601String(),
+        "alarmDateTime": alarmDateTime!.toIso8601String(),
         "isPending": isPending,
         "gradientColorIndex": gradientColorIndex,
       };

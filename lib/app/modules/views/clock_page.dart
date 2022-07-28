@@ -1,7 +1,6 @@
 import 'dart:async';
-
-import 'package:clock_app/constants/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/app/data/theme_data.dart';
 import 'package:intl/intl.dart';
 
 import 'clockview.dart';
@@ -32,10 +31,7 @@ class _ClockPageState extends State<ClockPage> {
             child: Text(
               'Clock',
               style: TextStyle(
-                  fontFamily: 'avenir',
-                  fontWeight: FontWeight.w700,
-                  color: CustomColors.primaryTextColor,
-                  fontSize: 24),
+                  fontFamily: 'avenir', fontWeight: FontWeight.w700, color: CustomColors.primaryTextColor, fontSize: 24),
             ),
           ),
           Flexible(
@@ -47,10 +43,7 @@ class _ClockPageState extends State<ClockPage> {
                 Text(
                   formattedDate,
                   style: TextStyle(
-                      fontFamily: 'avenir',
-                      fontWeight: FontWeight.w300,
-                      color: CustomColors.primaryTextColor,
-                      fontSize: 20),
+                      fontFamily: 'avenir', fontWeight: FontWeight.w300, color: CustomColors.primaryTextColor, fontSize: 20),
                 ),
               ],
             ),
@@ -74,10 +67,7 @@ class _ClockPageState extends State<ClockPage> {
                 Text(
                   'Timezone',
                   style: TextStyle(
-                      fontFamily: 'avenir',
-                      fontWeight: FontWeight.w500,
-                      color: CustomColors.primaryTextColor,
-                      fontSize: 24),
+                      fontFamily: 'avenir', fontWeight: FontWeight.w500, color: CustomColors.primaryTextColor, fontSize: 24),
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -89,10 +79,7 @@ class _ClockPageState extends State<ClockPage> {
                     SizedBox(width: 16),
                     Text(
                       'UTC' + offsetSign + timezoneString,
-                      style: TextStyle(
-                          fontFamily: 'avenir',
-                          color: CustomColors.primaryTextColor,
-                          fontSize: 14),
+                      style: TextStyle(fontFamily: 'avenir', color: CustomColors.primaryTextColor, fontSize: 14),
                     ),
                   ],
                 ),
@@ -107,7 +94,7 @@ class _ClockPageState extends State<ClockPage> {
 
 class DigitalClockWidget extends StatefulWidget {
   const DigitalClockWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -117,7 +104,7 @@ class DigitalClockWidget extends StatefulWidget {
 
 class DigitalClockWidgetState extends State<DigitalClockWidget> {
   var formattedTime = DateFormat('HH:mm').format(DateTime.now());
-  Timer timer;
+  late Timer timer;
 
   @override
   void initState() {
@@ -143,10 +130,7 @@ class DigitalClockWidgetState extends State<DigitalClockWidget> {
     print('=====>digital clock updated');
     return Text(
       formattedTime,
-      style: TextStyle(
-          fontFamily: 'avenir',
-          color: CustomColors.primaryTextColor,
-          fontSize: 64),
+      style: TextStyle(fontFamily: 'avenir', color: CustomColors.primaryTextColor, fontSize: 64),
     );
   }
 }

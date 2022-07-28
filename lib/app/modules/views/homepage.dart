@@ -1,10 +1,10 @@
-import 'package:clock_app/constants/theme_data.dart';
-import 'package:clock_app/data.dart';
-import 'package:clock_app/enums.dart';
-import 'package:clock_app/models/menu_info.dart';
-import 'package:clock_app/views/alarm_page.dart';
-import 'package:clock_app/views/clock_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/app/data/data.dart';
+import 'package:flutter_alarm_clock/app/data/enums.dart';
+import 'package:flutter_alarm_clock/app/data/models/menu_info.dart';
+import 'package:flutter_alarm_clock/app/data/theme_data.dart';
+import 'package:flutter_alarm_clock/app/modules/views/alarm_page.dart';
+import 'package:flutter_alarm_clock/app/modules/views/clock_page.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,9 +21,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: menuItems
-                .map((currentMenuInfo) => buildMenuButton(currentMenuInfo))
-                .toList(),
+            children: menuItems.map((currentMenuInfo) => buildMenuButton(currentMenuInfo)).toList(),
           ),
           VerticalDivider(
             color: CustomColors.dividerColor,
@@ -31,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: Consumer<MenuInfo>(
-              builder: (BuildContext context, MenuInfo value, Widget child) {
+              builder: (BuildContext context, MenuInfo value, Widget? child) {
                 if (value.menuType == MenuType.clock)
                   return ClockPage();
                 else if (value.menuType == MenuType.alarm)
@@ -61,14 +59,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildMenuButton(MenuInfo currentMenuInfo) {
     return Consumer<MenuInfo>(
-      builder: (BuildContext context, MenuInfo value, Widget child) {
-        return FlatButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(32))),
+      builder: (BuildContext context, MenuInfo value, Widget? child) {
+        return MaterialButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(32))),
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 0),
-          color: currentMenuInfo.menuType == value.menuType
-              ? CustomColors.menuBackgroundColor
-              : Colors.transparent,
+          color: currentMenuInfo.menuType == value.menuType ? CustomColors.menuBackgroundColor : CustomColors.pageBackgroundColor,
           onPressed: () {
             var menuInfo = Provider.of<MenuInfo>(context, listen: false);
             menuInfo.updateMenu(currentMenuInfo);
@@ -76,16 +71,13 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               Image.asset(
-                currentMenuInfo.imageSource,
+                currentMenuInfo.imageSource!,
                 scale: 1.5,
               ),
               SizedBox(height: 16),
               Text(
                 currentMenuInfo.title ?? '',
-                style: TextStyle(
-                    fontFamily: 'avenir',
-                    color: CustomColors.primaryTextColor,
-                    fontSize: 14),
+                style: TextStyle(fontFamily: 'avenir', color: CustomColors.primaryTextColor, fontSize: 14),
               ),
             ],
           ),

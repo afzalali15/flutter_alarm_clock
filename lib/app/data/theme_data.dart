@@ -8,7 +8,7 @@ class CustomColors {
 
   static Color clockBG = Color(0xFF444974);
   static Color clockOutline = Color(0xFFEAECFF);
-  static Color secHandColor = Colors.orange[300];
+  static Color? secHandColor = Colors.orange[300];
   static Color minHandStatColor = Color(0xFF748EF6);
   static Color minHandEndColor = Color(0xFF77DDFF);
   static Color hourHandStatColor = Color(0xFFC279FB);
