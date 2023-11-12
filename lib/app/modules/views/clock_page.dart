@@ -14,7 +14,13 @@ class _ClockPageState extends State<ClockPage> {
   @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
-
+    var startOfDay = DateTime(now.year, now.month, now.day);
+    var secondsSinceStartOfDay = now.difference(startOfDay).inSeconds;
+    int speedTimeSeconds = (secondsSinceStartOfDay * 0.041666).round();
+    Duration speedTime = Duration(seconds: speedTimeSeconds);
+    now = now.add(speedTime);
+    print('--------> TIME');
+    print(now);
     var formattedDate = DateFormat('EEE, d MMM').format(now);
     var timezoneString = now.timeZoneOffset.toString().split('.').first;
     var offsetSign = '';
@@ -103,7 +109,7 @@ class DigitalClockWidget extends StatefulWidget {
 }
 
 class DigitalClockWidgetState extends State<DigitalClockWidget> {
-  var formattedTime = DateFormat('HH:mm').format(DateTime.now());
+  var formattedTime = DateFormat('HH:mm:ss').format(DateTime.now().add(Duration(seconds: (DateTime.now().difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inSeconds * 0.041666).round())));
   late Timer timer;
 
   @override
@@ -113,7 +119,7 @@ class DigitalClockWidgetState extends State<DigitalClockWidget> {
       var currentMinute = DateTime.now().minute;
       if (perviousMinute != currentMinute)
         setState(() {
-          formattedTime = DateFormat('HH:mm').format(DateTime.now());
+          formattedTime = DateFormat('HH:mm:ss').format(DateTime.now().add(Duration(seconds: (DateTime.now().difference(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)).inSeconds * 0.041666).round())));
         });
     });
     super.initState();
